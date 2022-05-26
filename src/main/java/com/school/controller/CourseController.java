@@ -3,6 +3,8 @@ package com.school.controller;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.school.entity.Course;
 import com.school.entity.CourseDetail;
 import com.school.entity.Teacher;
+import com.school.response.Invigilation;
 import com.school.response.Schedule;
 import com.school.service.CourseService;
 import com.school.service.TeacherService;
@@ -39,7 +42,6 @@ public class CourseController {
 		}
 		
 		
-		
 		return ResponseEntity.ok(list);
 		
 	}
@@ -60,6 +62,22 @@ public class CourseController {
 		
 		return ResponseEntity.ok(list);
 		
+	}
+	//老师监考次数排序
+	@GetMapping("/invigilations/all")
+	public ResponseEntity<?> getAllTeacherBaseInvigilation() {
+		List<Teacher> lTeachers = teacherService.getallTeachers();
+		List<Invigilation> lInvigilations = new ArrayList<>();
+		for (Teacher t : lTeachers) {
+			Invigilation invigilation = new Invigilation();
+			invigilation.setTeacherName(t.getTeacherName());
+			invigilation.setInvigilationCount(t.getInvigilationCount());
+			lInvigilations.add(invigilation);
+		}
+		
+		lInvigilations = lInvigilations.stream().sorted(Comparator.comparing(Invigilation::getInvigilationCount)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok(lInvigilations);
 	}
 	
 }

@@ -21,4 +21,10 @@ public class TeacherServiceImpl implements TeacherService {
 		return teacherRepository.findTeachersByapartmentApartmentName(apartName);
 	}
 
+	@Override
+	public List<Teacher> getallTeachers() {
+		// TODO Auto-generated method stub
+		return teacherRepository.findAll();
+	}
+
 }

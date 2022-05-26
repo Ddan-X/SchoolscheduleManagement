@@ -37,6 +37,9 @@ public class Teacher {
 	@JsonIgnore
 	private Apartment apartment;
 	
+	//监考次数
+	private Integer invigilationCount;
+	
 	@ManyToMany(mappedBy="teachers",fetch = FetchType.EAGER)
 	private List<Course> courses = new ArrayList<>();
 }
