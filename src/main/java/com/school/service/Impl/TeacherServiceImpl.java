@@ -27,4 +27,16 @@ public class TeacherServiceImpl implements TeacherService {
 		return teacherRepository.findAll();
 	}
 
+	@Override
+	public Teacher findTeacherById(Integer id) {
+		// TODO Auto-generated method stub
+		return teacherRepository.getById(id);
+	}
+
+	@Override
+	public void save(Teacher t) {
+		// TODO Auto-generated method stub
+		teacherRepository.save(t);
+	}
+
 }

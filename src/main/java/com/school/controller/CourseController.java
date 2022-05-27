@@ -3,13 +3,15 @@ package com.school.controller;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collector;
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.school.entity.Course;
@@ -40,7 +42,6 @@ public class CourseController {
 			s.setTeacherName(t.getTeacherName());
 			list.add(s);
 		}
-		
 		
 		return ResponseEntity.ok(list);
 		
@@ -74,10 +75,19 @@ public class CourseController {
 			invigilation.setInvigilationCount(t.getInvigilationCount());
 			lInvigilations.add(invigilation);
 		}
-		
+		//排序从小到大
 		lInvigilations = lInvigilations.stream().sorted(Comparator.comparing(Invigilation::getInvigilationCount)).collect(Collectors.toList());
 		
 		return ResponseEntity.ok(lInvigilations);
+	}
+	
+	@PutMapping(value = "/invigilations")
+	public ResponseEntity<?> addInvigilationsCount(Integer id, int count){
+		Teacher t = teacherService.findTeacherById(id);
+		t.setInvigilationCount(count);
+		teacherService.save(t);
+		
+		return  ResponseEntity.status(200).body(t);
 	}
 	
 }
