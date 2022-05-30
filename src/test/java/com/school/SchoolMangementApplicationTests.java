@@ -60,7 +60,7 @@ class SchoolMangementApplicationTests {
 			//List<Course> list =t.getCourses();
 			List<Course> list = courseRepository.findByTeachersTeacherId(t.getTeacherId());
 			//System.out.println("course siez"+list.size());
-			Schedule schedule = new Schedule(t.getTeacherName(),list);
+			Schedule schedule = new Schedule(t.getTeacherName(),list,t.getTeacherId());
 			schecList.add(schedule);
 		}
 		System.out.println("===========Get course=======");

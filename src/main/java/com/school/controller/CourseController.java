@@ -3,7 +3,7 @@ package com.school.controller;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.school.entity.Course;
 import com.school.entity.CourseDetail;
 import com.school.entity.Teacher;
+import com.school.request.InvigilationRequest;
 import com.school.response.Invigilation;
 import com.school.response.Schedule;
 import com.school.service.CourseService;
@@ -74,6 +76,7 @@ public class CourseController {
 			Invigilation invigilation = new Invigilation();
 			invigilation.setTeacherName(t.getTeacherName());
 			invigilation.setInvigilationCount(t.getInvigilationCount());
+			invigilation.setTeacherId(t.getTeacherId());
 			lInvigilations.add(invigilation);
 		}
 		//排序从小到大
@@ -82,13 +85,15 @@ public class CourseController {
 		return ResponseEntity.ok(lInvigilations);
 	}
 	
-	@PutMapping(value = "/invigilations")
-	public ResponseEntity<?> addInvigilationsCount(Integer id, int count){
-		Teacher t = teacherService.findTeacherById(id);
-		t.setInvigilationCount(count);
-		teacherService.save(t);
-		
-		return  ResponseEntity.status(200).body(t);
+	@PutMapping(value = "/invigilations/modify")
+	public ResponseEntity<?> addInvigilationsCount(@RequestBody InvigilationRequest invigilationRequest){
+		Map<Integer,Integer> request = invigilationRequest.getInvigilationMap();
+		for(Map.Entry<Integer, Integer> entry : request.entrySet()) {
+			Teacher t = teacherService.findTeacherById(entry.getKey());
+			t.setInvigilationCount(entry.getValue());
+			teacherService.save(t);
+		}
+		return  ResponseEntity.status(200).body(request);
 	}
 	
 }

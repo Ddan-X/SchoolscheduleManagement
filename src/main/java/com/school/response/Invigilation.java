@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Invigilation {
 	private String teacherName;
+	private Integer teacherId;
 	private Integer invigilationCount;
 }
