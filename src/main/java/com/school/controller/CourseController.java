@@ -40,6 +40,7 @@ public class CourseController {
 		for(Teacher t : lTeachers) {
 			Schedule s = new Schedule(t.getCourses());
 			s.setTeacherName(t.getTeacherName());
+			s.setTeacherId(t.getTeacherId());
 			list.add(s);
 		}
 		

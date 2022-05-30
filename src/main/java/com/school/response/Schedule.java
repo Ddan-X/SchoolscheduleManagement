@@ -18,12 +18,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Schedule {
 	private String teacherName;
+	private Integer teacherId;
 	private List<Course> listCourses;
 	@JsonIgnore
 	private List<CourseDetail> listCoursesDetails;
-	public Schedule(String teacherName, List<Course> courses) {
+	public Schedule(String teacherName, List<Course> courses, Integer id) {
 		this.teacherName = teacherName;
 		this.listCourses = courses;
+		this.teacherId = id;
 	}
 	
 	public Schedule(List<Course> listC){
