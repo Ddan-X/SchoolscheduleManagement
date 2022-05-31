@@ -22,6 +22,7 @@ public class Schedule {
 	private List<Course> listCourses;
 	@JsonIgnore
 	private List<CourseDetail> listCoursesDetails;
+	
 	public Schedule(String teacherName, List<Course> courses, Integer id) {
 		this.teacherName = teacherName;
 		this.listCourses = courses;

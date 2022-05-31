@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.school.entity.Course;
@@ -25,6 +26,7 @@ import com.school.service.CourseService;
 import com.school.service.TeacherService;
 
 @RestController
+@RequestMapping("/api/school")
 public class CourseController {
 	
 	@Autowired
@@ -85,14 +87,20 @@ public class CourseController {
 		return ResponseEntity.ok(lInvigilations);
 	}
 	
-	@PutMapping(value = "/invigilations/modify")
-	public ResponseEntity<?> addInvigilationsCount(@RequestBody InvigilationRequest invigilationRequest){
-		Map<Integer,Integer> request = invigilationRequest.getInvigilationMap();
-		for(Map.Entry<Integer, Integer> entry : request.entrySet()) {
-			Teacher t = teacherService.findTeacherById(entry.getKey());
-			t.setInvigilationCount(entry.getValue());
+	@PutMapping(value = "/invigilations/all/modify")
+	public ResponseEntity<?> addInvigilationsCount(@RequestBody List<InvigilationRequest> request){
+		for(InvigilationRequest inv: request) {
+			Teacher t = teacherService.findTeacherById(inv.getTeacherId());
+			t.setInvigilationCount(t.getInvigilationCount());
 			teacherService.save(t);
 		}
+		
+//		Map<Integer,Integer> request = invigilationRequest.getInvigilationMap();
+//		for(Map.Entry<Integer, Integer> entry : request.entrySet()) {
+//			Teacher t = teacherService.findTeacherById(entry.getKey());
+//			t.setInvigilationCount(entry.getValue());
+//			teacherService.save(t);
+//		}
 		return  ResponseEntity.status(200).body(request);
 	}
 	

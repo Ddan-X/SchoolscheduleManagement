@@ -15,5 +15,7 @@ import lombok.NoArgsConstructor;
 public class InvigilationRequest {
 	//key: teacherId'
 	//value: invigilationCount
-	Map<Integer,Integer> invigilationMap = new HashMap<>();
+	//Map<Integer,Integer> invigilationMap = new HashMap<>();
+	private Integer teacherId;
+	private Integer invigilationCount;
 }
