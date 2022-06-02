@@ -10,6 +10,7 @@ import { CourseService } from 'src/app/service/course.service';
 export class ScheduleComponent implements OnInit {
   teacherArray: TeachersResponse[] = [];
   constructor(private _courseService: CourseService) {}
+
   apartmentName: string = '';
 
   ngOnInit(): void {

@@ -6,7 +6,7 @@ import { TeachersResponse } from '../interfaces/teachers-response';
   providedIn: 'root',
 })
 export class CourseService {
-  private baseUrl = 'http://localhost:8080/api/school';
+  private baseUrl = 'http://localhost:9010/api/school';
   constructor(private _httpClient: HttpClient) {}
 
   getAllTeachers(apartmentName: string) {

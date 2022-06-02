@@ -1,5 +1,15 @@
-<label></label>
-<input type="text" id="apartmentName" [(ngModel)]="apartmentName" />
+<form>
+  <label for="apartmentName">Apartment Name</label>
+  <input type="text" id="apartmentName" name="apartmentName" />
+  <button
+    class="btn btn-primary"
+    type="submit"
+    (click)="loadData(apartmentName)"
+  >
+    Submit
+  </button>
+</form>
+
 <table class="table">
   <thead>
     <tr>
