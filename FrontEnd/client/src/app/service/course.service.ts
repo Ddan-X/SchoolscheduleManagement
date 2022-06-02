@@ -6,12 +6,12 @@ import { TeachersResponse } from '../interfaces/teachers-response';
   providedIn: 'root',
 })
 export class CourseService {
-  private baseUrl = 'http://localhost:8080/api/course/';
+  private baseUrl = 'http://localhost:8080/api/school';
   constructor(private _httpClient: HttpClient) {}
 
   getAllTeachers(apartmentName: string) {
     return this._httpClient.get<TeachersResponse[]>(
-      this.baseUrl + '/teachers/' + apartmentName
+      this.baseUrl + '/apartment/' + apartmentName
     );
   }
 }
