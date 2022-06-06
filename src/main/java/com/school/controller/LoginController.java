@@ -13,9 +13,14 @@ public class LoginController {
 	
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> loginPage(@RequestBody LoginRequest request){
+	public ResponseEntity<?> loginPage(@RequestBody LoginRequest loginRequest){
+		String name = loginRequest.getUsername();
+		String passowrd = loginRequest.getPassword();
+		if(name.equals("zoe")&&passowrd.equals("1016")) {
+			return  ResponseEntity.status(200).body(name);
+		};
 		
-		return null;
+		return ResponseEntity.status(404).body("wrong");
 		
 	}
 }

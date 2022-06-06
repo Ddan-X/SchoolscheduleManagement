@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginRequest } from 'src/app/interfaces/login-request';
+import { Router } from '@angular/router';
+import { LoginRequest } from 'src/app/model/login-request';
+
+import { CourseService } from 'src/app/service/course.service';
+import { LoginService } from 'src/app/service/login.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +11,21 @@ import { LoginRequest } from 'src/app/interfaces/login-request';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  loginForm: LoginRequest | undefined;
+  loginForm = new LoginRequest();
 
-  constructor() {}
+  constructor(private loginService: LoginService, private _router: Router) {}
 
   ngOnInit(): void {}
+
+  login(): void {
+    this.loginService.login(this.loginForm).subscribe({
+      next: (result) => {
+        if (result == this.loginForm.username) {
+          this._router.navigate(['/course/sche']);
+        } else {
+          console.log(result);
+        }
+      },
+    });
+  }
 }

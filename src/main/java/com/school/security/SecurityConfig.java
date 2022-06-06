@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  *
  */
 @Configuration
-@EnableWebSecurity //it's allow the static resource
+@EnableWebSecurity //it's allow the static resource, image, css, js..
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
@@ -37,9 +37,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.formLogin()//form authenticated
 		.loginPage("/login") //use custom login page
+//		.loginProcessingUrl("")//submit form url
+//		.usernameParameter("zoeDan")
+//		.passwordParameter("101609")
+//		.successForwardUrl("")//success login transfer url
 		.and().authorizeHttpRequests()
 		.antMatchers("/login").permitAll() // login do not need to authenticated
 		.anyRequest().authenticated();
+		
+		http.csrf().disable();
+
+		http.headers().frameOptions().sameOrigin();//load same url iframe page
 	}
 	
 }
