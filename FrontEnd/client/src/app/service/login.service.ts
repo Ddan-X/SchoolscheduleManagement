@@ -1,14 +1,29 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
+import { LoginResponse } from '../interfaces/login-response';
 import { LoginRequest } from '../model/login-request';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private baseUrl = 'http://localhost:9010/login';
+  private baseUrl = 'http://localhost:9010/api/school/login';
   constructor(private _httpClient: HttpClient) {}
-  login(request: LoginRequest) {
-    return this._httpClient.post(this.baseUrl, request);
+  login(request: LoginRequest): Observable<LoginResponse> {
+    return this._httpClient
+      .post<LoginResponse>(this.baseUrl, request)
+      .pipe(catchError(this.errorHandler));
+  }
+  //need to handle error HttpErrorResponse
+  errorHandler(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error(error.error.message);
+    } else {
+      console.error(
+        `Backend returned cade ${error.status},` + `body was: ${error.error}`
+      );
+    }
+    return throwError(() => new Error(error.error.message));
   }
 }

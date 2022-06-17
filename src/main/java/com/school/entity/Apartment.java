@@ -24,8 +24,6 @@ import lombok.Setter;
 @Table
 @Data
 @DynamicUpdate
-@NoArgsConstructor
-@AllArgsConstructor
 public class Apartment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

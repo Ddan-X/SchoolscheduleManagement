@@ -20,7 +20,8 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.loginService.login(this.loginForm).subscribe({
       next: (result) => {
-        if (result == this.loginForm.username) {
+        var username = result.username;
+        if (username == this.loginForm.username) {
           this._router.navigate(['/course/sche']);
         } else {
           console.log(result);

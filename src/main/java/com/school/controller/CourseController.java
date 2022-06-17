@@ -27,9 +27,9 @@ import com.school.response.Schedule;
 import com.school.service.CourseService;
 import com.school.service.TeacherService;
 
+@CrossOrigin(origins = "*", maxAge = 3600)//allow cross-origin resource sharing (CORS) request
 @RestController
 @RequestMapping("/api/school")
-@CrossOrigin(origins = "http:/4200/*", maxAge = 3600)//allow cross-origin resource sharing (CORS) request
 public class CourseController {
 	
 	@Autowired
