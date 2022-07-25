@@ -14,10 +14,12 @@ export class ScheduleComponent implements OnInit {
   apartmentName: string = '';
 
   ngOnInit(): void {
-    this.loadData(this.apartmentName);
+    //console.log(this.apartmentName);
+    //this.loadData(this.apartmentName);
   }
 
   loadData(apartmentName: string) {
+    console.log('call courseService');
     this._courseService.getAllTeachers(apartmentName).subscribe((teachers) => {
       this.teacherArray = teachers;
       console.log(teachers);

@@ -7,8 +7,9 @@ import { LoginRequest } from '../model/login-request';
 @Injectable({
   providedIn: 'root',
 })
+//not use any more
 export class LoginService {
-  private baseUrl = 'http://localhost:9010/api/school/login';
+  private baseUrl = 'http://localhost:9010/api/school/etstst';
   constructor(private _httpClient: HttpClient) {}
   login(request: LoginRequest): Observable<LoginResponse> {
     return this._httpClient

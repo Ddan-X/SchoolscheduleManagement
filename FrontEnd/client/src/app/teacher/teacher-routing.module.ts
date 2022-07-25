@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   { path: 'course/invig', component: InvigilateComponent },
   {
-    path: 'login',
+    path: 'course/login',
     component: LoginComponent,
   },
 ];

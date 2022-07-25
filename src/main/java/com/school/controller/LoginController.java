@@ -17,26 +17,26 @@ import com.school.request.LoginRequest;
 import com.school.response.LoginResponse;
 import com.school.service.Impl.UserDetailsServiceImpl;
 
-@CrossOrigin(origins = "*", maxAge = 3600)//allow cross-origin resource sharing (CORS) request
-@RestController
-@RequestMapping("/api/school")
-public class LoginController {
-	
-	@Autowired
-	AuthenticationManager authenticationManager;
-	
-	@PostMapping("/login")
-	public ResponseEntity<?> loginPage(@RequestBody LoginRequest loginRequest){
-		String name = loginRequest.getUsername();
-		String passowrd = loginRequest.getPassword();
-//		if(name.equals("zoe")&&passowrd.equals("1016")) {
-//			return  ResponseEntity.status(200).body(name);
-//		};
-		Authentication authentication= authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(name, passowrd));
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
-		LoginResponse loginResponse =new LoginResponse();
-		loginResponse.setUsername(userDetails.getUsername());
-		return ResponseEntity.ok(loginResponse);
-	}
-}
+//@CrossOrigin(origins = "*", maxAge = 3600)//allow cross-origin resource sharing (CORS) request
+//@RestController
+//@RequestMapping("/api/school")
+//public class LoginController {
+//	
+//	@Autowired
+//	AuthenticationManager authenticationManager;
+//	
+//	@PostMapping("/testNo")
+//	public ResponseEntity<?> loginPage(@RequestBody LoginRequest loginRequest){
+//		String name = loginRequest.getUsername();
+//		String passowrd = loginRequest.getPassword();
+////		if(name.equals("zoe")&&passowrd.equals("1016")) {
+////			return  ResponseEntity.status(200).body(name);
+////		};
+//		Authentication authentication= authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(name, passowrd));
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+//		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+//		LoginResponse loginResponse =new LoginResponse();
+//		loginResponse.setUsername(userDetails.getUsername());
+//		return ResponseEntity.ok(loginResponse);
+//	}
+//}

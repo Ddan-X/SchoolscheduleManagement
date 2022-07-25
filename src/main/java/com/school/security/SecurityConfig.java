@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.school.service.Impl.UserDetailsServiceImpl;
 
@@ -59,7 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		.usernameParameter("zoeDan")
 //		.passwordParameter("101609")
 //		.successForwardUrl("")//success login transfer url
-		http.cors().and().csrf().disable()
+		http.cors().configurationSource(configurationSource())
+		.and().csrf().disable()
 		 .authorizeHttpRequests()
 		.antMatchers("/api/school/login").permitAll() // login do not need to authenticated
 		.anyRequest().authenticated()
@@ -68,6 +72,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         
 
 		//http.headers().frameOptions().sameOrigin();//load same url iframe page
+	}
+	/**
+	 * CORS
+	 */
+	public CorsConfigurationSource configurationSource() {
+		CorsConfiguration corsConfiguration = new CorsConfiguration();
+		//allow the url
+		corsConfiguration.addAllowedOrigin("http://localhost:4200");
+		//allow the http method
+		corsConfiguration.addAllowedMethod("*");
+		//allow the http heard
+		corsConfiguration.addAllowedHeader("*");
+		
+		corsConfiguration.setAllowCredentials(true);
+		
+		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+		//allow all url
+		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+		
+		return urlBasedCorsConfigurationSource;
 	}
 	
 }

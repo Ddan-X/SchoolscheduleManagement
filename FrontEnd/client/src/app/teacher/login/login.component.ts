@@ -13,7 +13,7 @@ import { LoginService } from 'src/app/service/login.service';
 export class LoginComponent implements OnInit {
   loginForm = new LoginRequest();
 
-  constructor(private loginService: LoginService, private _router: Router) {}
+  constructor(private loginService: CourseService, private _router: Router) {}
 
   ngOnInit(): void {}
 
