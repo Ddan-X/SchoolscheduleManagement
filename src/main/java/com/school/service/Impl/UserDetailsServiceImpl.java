@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.school.entity.User;
@@ -37,9 +38,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		Collection<? extends GrantedAuthority> authorities = new ArrayList<>();
 		//auto compare password and username
 		UserDetails userDetails = new org.springframework.security.core.userdetails.User
-				(username, "{noop}"+user.getPassword(), authorities);
+				(username,"{bcrypt}"+user.getPassword(),
+	// boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, 
+						true,
+						true,
+						true,
+						true,
+						authorities);
+				//(username, "{noop}"+user.getPassword(), authorities);
 		//{noop} do not user password encode
+		//{bcrypt} use password encode
 		return userDetails;
 	}
+	
+//	public static void main(String[] args) {
+//		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//		String encode = bCryptPasswordEncoder.encode("123");
+//		System.out.println(encode);
+//	}
 
 }

@@ -67,6 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		 .authorizeHttpRequests()
 		.antMatchers("/api/school/login").permitAll() // login do not need to authenticated
 		.anyRequest().authenticated()
+		.and().rememberMe()//allow the remenber me
+		.tokenValiditySeconds(1209600)//token allow 2 week
+		.rememberMeParameter("remember-me")
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().httpBasic();
         

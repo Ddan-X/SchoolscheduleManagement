@@ -1,6 +1,11 @@
 <form>
   <label for="apartmentName">Apartment Name</label>
-  <input type="text" id="apartmentName" name="apartmentName" />
+  <input
+    type="text"
+    id="apartmentName"
+    name="apartmentName"
+    [(ngModel)]="apartmentName"
+  />
   <button
     class="btn btn-primary"
     type="submit"

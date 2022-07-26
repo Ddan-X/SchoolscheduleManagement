@@ -61,6 +61,27 @@ public class CourseController {
 		loginResponse.setUsername(userDetails.getUsername());
 		return ResponseEntity.ok(loginResponse);
 	}
+	/**
+	 * get current user, two way to get current user
+	 * may change return type to ResponseEntity<?>
+	 * @return
+	 */
+	@GetMapping("/loginUser1")
+	public UserDetails getCurrentUser1() {
+		UserDetails userDetails= (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return userDetails;
+	}
+	@GetMapping("/loginUser2")
+	public UserDetails getCurrentUser2(Authentication authentication) {
+		UserDetails userDetails= (UserDetails) authentication.getPrincipal();
+	
+		return userDetails;
+	}
+	/**
+	 * 
+	 * @param apartName
+	 * @return
+	 */
 	
 	@GetMapping("/apartment/{apartmentName}")
 	public ResponseEntity<?> findTeachers(@PathVariable("apartmentName")String apartName){

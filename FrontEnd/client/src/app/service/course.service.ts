@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TeachersResponse } from '../interfaces/teachers-response';
-import { Observable, throwError, catchError } from 'rxjs';
+import { Observable, throwError, catchError, map } from 'rxjs';
 import { LoginRequest } from '../model/login-request';
 import { LoginResponse } from '../interfaces/login-response';
 
@@ -20,7 +20,14 @@ export class CourseService {
   getAllTeachers(apartmentName: string): Observable<TeachersResponse[]> {
     return this._httpClient
       .get<TeachersResponse[]>(this.baseUrl + '/apartment/' + apartmentName)
-      .pipe(catchError(this.errorHandler));
+      .pipe(
+        map((response) => {
+          if (response) {
+            return Object.values(response); //This will return the array of object values.
+          }
+          return [];
+        })
+      );
   }
 
   //need to handle error HttpErrorResponse
