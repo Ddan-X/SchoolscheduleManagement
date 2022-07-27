@@ -59,6 +59,7 @@ public class CourseController {
 		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
 		LoginResponse loginResponse =new LoginResponse();
 		loginResponse.setUsername(userDetails.getUsername());
+		//loginResponse.setToken(userDetails.)
 		return ResponseEntity.ok(loginResponse);
 	}
 	/**

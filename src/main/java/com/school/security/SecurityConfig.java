@@ -1,5 +1,7 @@
 package com.school.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +13,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -67,9 +71,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		 .authorizeHttpRequests()
 		.antMatchers("/api/school/login").permitAll() // login do not need to authenticated
 		.anyRequest().authenticated()
-		.and().rememberMe()//allow the remenber me
-		.tokenValiditySeconds(1209600)//token allow 2 week
-		.rememberMeParameter("remember-me")
+		.and().rememberMe()//allow the remenber me, token will store in cookies, not safe
+		.tokenValiditySeconds(1209600)//token allow 2 week 
+		.rememberMeParameter("remember-me")//
+		.tokenRepository(gePersistentTokenRepository())
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().httpBasic();
         
@@ -97,4 +102,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return urlBasedCorsConfigurationSource;
 	}
 	
+	@Autowired
+	DataSource dataSource;
+	/**
+	 * token save to database
+	 * 
+	 */
+	@Bean
+	public PersistentTokenRepository gePersistentTokenRepository() {
+		JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+		tokenRepositoryImpl.setDataSource(dataSource);
+		
+		// when start project, automatic create new table to save token, first time true, next need to false to comment it
+		tokenRepositoryImpl.setCreateTableOnStartup(false);
+		
+		return tokenRepositoryImpl;
+		
+	}
 }
